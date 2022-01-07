@@ -12,9 +12,6 @@ def cercaUrl(url, filtro, stringUrl):
     content = req.content
 
     soup= BeautifulSoup(content,"html.parser")
-    #len(soup.find_all('a'))
-
-    
 
  
     for link in soup.findAll('a', href=True):
@@ -86,7 +83,7 @@ def stampaXml(elenco_url, nome_file):
         print('Fine processo')
 
 url = input('inserire url:')
-filtro = input('inserire filtro:')
+filtro = url.split("//")[1]
 stringUrl = url
 elenco_home = cercaUrl(url,filtro, stringUrl)
 elenco_sito = cercaUrl2(elenco_home,filtro, stringUrl)
