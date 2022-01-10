@@ -10,25 +10,6 @@ def parser(htmlRaw):
     a_list = soup.findAll('a', href=True)
     return a_list
 
-""" def extractLinks(a_list, domain, base_url):
-    link_list = []
-    for a in a_list:
-        href = a.get('href')
-        if len(href)> 1 and href[-1] == '/':
-            href = href[:-1]            
-        if domain in href:
-            link_list.append(href)
-        elif domain not in href:
-            if "http" not in href:
-                if href.startswith('/'):
-                    link_list.append(base_url + href)
-                elif re.match(r'^[a-z]',href):
-                    link_list.append(base_url + "/" + href)
-                elif re.match(r'^tel',href):
-                    link_list.append(base_url + "/" + href)
-                elif re.match(r'#',href):
-                   continue
-    return link_list """
 
 def extractLinks(a_list, domain, base_url):
     for a in a_list:
