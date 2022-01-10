@@ -10,24 +10,46 @@ def parser(htmlRaw):
     a_list = soup.findAll('a', href=True)
     return a_list
 
-
-def extractLinks(a_list, domain, base_url):
+""" def extractLinks(a_list, domain, base_url):
+    link_list = []
     for a in a_list:
         href = a.get('href')
         if len(href)> 1 and href[-1] == '/':
             href = href[:-1]            
         if domain in href:
-            yield href
+            link_list.append(href)
         elif domain not in href:
             if "http" not in href:
                 if href.startswith('/'):
-                    yield base_url + href
+                    link_list.append(base_url + href)
                 elif re.match(r'^[a-z]',href):
-                   yield base_url + "/" + href
+                    link_list.append(base_url + "/" + href)
                 elif re.match(r'^tel',href):
-                   yield base_url + "/" + href
+                    link_list.append(base_url + "/" + href)
                 elif re.match(r'#',href):
                    continue
+    return link_list """
+
+def extractLinks(a_list, domain, base_url):
+    for a in a_list:
+        href = a.get('href')  
+        if len(href) == 1 and href == '/':
+            yield base_url
+        if domain in href:
+            if href[-1] == '/':
+                href = href[:-1] 
+            yield href
+        elif domain not in href and len(href)>1 and 'http' not in href:
+            if href[-1] == '/':
+                href = href[:-1]    
+            if href.startswith('/'):
+                yield base_url + href
+            elif re.match(r'^[a-z]',href):
+                yield base_url + "/" + href
+            elif re.match(r'^tel',href):
+                yield base_url + "/" + href
+            elif re.match(r'#',href):
+                continue
 
 
 def spider(url, domain, baseurl):
